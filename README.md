@@ -9,9 +9,14 @@ This is a set of scripts that will clone the appropriate repos and setup a docke
 * Prerequisites:  Docker, docker-compose, nginx
 
 - Clone this repo
-- Run the docker-network.sh script
-- Run the get-repos.sh script
+- Run the `docker-network.sh` script
+- Run the `get-repos.sh` script
 - Edit the config files
+- Generate public/private key.  
+  - Place private key in imagex-config/ui
+  - Place public key in imagex-config/data
+- Run `docker-compose --project-name imagex up`
+- Configure nginx to expose access to ui/api/data service (see imagex.conf for example)
 - Navigate to http://localhost to verify the installation
 
 
