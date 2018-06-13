@@ -1,6 +1,8 @@
 # ImageX
 Central repository for the installation of the ImageX 3.0 imaging portal stack
 
+Demo site here:  https://imagex.sca.iu.edu
+
 ## What this does
 This is a set of scripts that will clone the appropriate repos and setup a docker network.  Running docker-compose against the provided config file will build and launch a set of internetworked docker containers which comprise the ImageX stack.  
 
