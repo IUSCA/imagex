@@ -6,7 +6,15 @@ module.exports = function(fs, winston) {
     exports.data = {
         paths: {
             "/imagexdata/imagex": {
+                //path: "/net/spitz/usr/local/nfs-dev/tile1",
                 path: "/opt/sca/imagex-tiles",
+                allow_origin: "*",
+                public_key: fs.readFileSync('/opt/sca/config/imagex.pub','utf8'),
+                scope: "imagex", //scope to check for authorization
+            },
+            "/imagexdata/files": {
+                //path: "/net/spitz/usr/local/nfs-dev/tile1",
+                path: "/opt/sca/imagex-files",
                 allow_origin: "*",
                 public_key: fs.readFileSync('/opt/sca/config/imagex.pub','utf8'),
                 scope: "imagex", //scope to check for authorization

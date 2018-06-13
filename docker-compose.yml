@@ -1,0 +1,64 @@
+version: "3"
+services:
+  ui:
+    build: ./imagex-ui/
+    depends_on:
+      - api
+    volumes:
+      - ./imagex-ui:/opt/sca/imagex-ui
+      - /opt/sca/imagex-ui/node_modules
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      custom_network:
+        ipv4_address: 172.18.0.4
+  importer:
+    build: ./imagex-importer/
+    depends_on:
+      - api
+    volumes:
+      - ./imagex-importer:/opt/sca/imagex-importer
+      - /opt/sca/imagex-ui/uploads:/opt/sca/uploads
+      - /opt/sca/imagex-config/importer:/opt/sca/config
+      - /opt/sca/imagex-tiles:/opt/sca/imagex-tiles
+      - /opt/sca/imagex-files:/opt/sca/imagex-files
+    networks:
+      custom_network:
+        ipv4_address: 172.18.0.9
+  api:
+    build: ./imagex-api/
+    depends_on:
+      - mongodb
+    environment:
+      HOST: "172.18.0.7"
+    volumes:
+      - ./new-api:/opt/sca/new-api
+      - /opt/sca/imagex-config:/opt/sca/imagex-config
+      - /opt/sca/new-api/node_modules
+    networks:
+      custom_network:
+        ipv4_address: 172.18.0.7
+  data:
+    build: ./imagex-data/
+    volumes:
+      - ./imagex-data:/opt/sca/imagex-data
+      - /opt/sca/imagex-data/node_modules
+      - /opt/sca/imagex-config/data:/opt/sca/config
+      - /opt/sca/imagex-tiles:/opt/sca/imagex-tiles
+      - /opt/sca/imagex-files:/opt/sca/imagex-files
+    networks:
+      custom_network:
+        ipv4_address: 172.18.0.5
+  mongodb:
+    image: mongo
+    container_name: imagex-mongodb
+    volumes:
+      - /opt/sca/docker-data/imagex-mongodb-new:/data/db
+    environment:
+      AUTH: "no"
+    networks:
+      custom_network:
+        ipv4_address: 172.18.0.2
+networks:
+  custom_network:
+      external:
+        name: imgxnet
