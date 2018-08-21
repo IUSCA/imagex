@@ -1,6 +1,7 @@
 version: "3"
 services:
   ui:
+    restart: always
     build: ./imagex-ui/
     depends_on:
       - api
@@ -12,6 +13,7 @@ services:
       custom_network:
         ipv4_address: 172.18.0.4
   importer:
+    restart: always
     build: ./imagex-importer/
     depends_on:
       - api
@@ -25,6 +27,7 @@ services:
       custom_network:
         ipv4_address: 172.18.0.9
   api:
+    restart: always
     build: ./imagex-api/
     depends_on:
       - mongodb
@@ -38,6 +41,7 @@ services:
       custom_network:
         ipv4_address: 172.18.0.7
   data:
+    restart: always
     build: ./imagex-data/
     volumes:
       - ./imagex-data:/opt/sca/imagex-data
@@ -49,6 +53,7 @@ services:
       custom_network:
         ipv4_address: 172.18.0.5
   mongodb:
+    restart: always
     image: mongo
     container_name: imagex-mongodb
     volumes:
